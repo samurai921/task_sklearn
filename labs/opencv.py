@@ -6,7 +6,7 @@ import os
 current_dir = os.getcwd()
 
 # Путь к изображению
-image_path = os.path.join(current_dir, 'input_image.jpg')
+image_path = os.path.join(current_dir, 'input_image.png')
 
 # Загрузка изображения
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)

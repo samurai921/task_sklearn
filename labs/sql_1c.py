@@ -10,7 +10,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS rooms (
                     name TEXT)''')
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS computers (
-                    id INTEGER PRIMARY KEY,
+                    id INTEGER PRIMARY KEY,12365
                     purchase_date DATE,
                     price DECIMAL(10,2),
                     room_id INTEGER,
