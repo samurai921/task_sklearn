@@ -1,34 +1,25 @@
 import cv2
 import numpy as np
-import os
 
-# Получение текущей директории
-current_dir = os.getcwd()
+def solarize(image, threshold):
+    return cv2.bitwise_not(cv2.threshold(cv2.bitwise_not(image), threshold, 255, cv2.THRESH_BINARY)[1])
 
-# Путь к изображению
-image_path = os.path.join(current_dir, 'input_image.png')
+def log_contrast(image, alpha):
+    return (alpha * np.log(1 + image)).astype(np.uint8)
 
-# Загрузка изображения
-image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+def main():
+  
+    image = cv2.imread('nature.jpg', cv2.IMREAD_GRAYSCALE)
 
-# Параметры для соляризации
-solarize_threshold = 150
+ 
+    solarized_image = solarize(image, threshold=127)
 
-# Параметры для логарифмического контрастирования
-log_alpha = 1.0
+   
+    log_contrast_image = log_contrast(image, alpha=1.0)
 
-# Соляризация
-inverted_image = cv2.bitwise_not(image)
-_, thresholded_image = cv2.threshold(image, solarize_threshold, 255, cv2.THRESH_BINARY)
-solarized_image = cv2.bitwise_and(image, thresholded_image)
 
-# Логарифмическое контрастирование
-log_transformed = np.uint8(np.log1p(image) * log_alpha)
+    cv2.imwrite('solarized_image.jpg', solarized_image)
+    cv2.imwrite('log_contrast_image.jpg', log_contrast_image)
 
-# Путь для сохранения результатов
-output_dir = os.path.join(current_dir, 'output')
-os.makedirs(output_dir, exist_ok=True)
-
-# Сохранение результатов
-cv2.imwrite(os.path.join(output_dir, 'solarized_image.jpg'), solarized_image)
-cv2.imwrite(os.path.join(output_dir, 'log_contrast_image.jpg'), log_transformed)
+if __name__ == "__main__":
+    main()
